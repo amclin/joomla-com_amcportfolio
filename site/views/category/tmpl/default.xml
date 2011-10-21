@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="Default Category Layout">
+		<message>
+			Default the list of projects of a specific category in the default template.
+		</message>
+	</layout>
+	<state>
+		<name>AMC Portfolio Standard Category Layout</name>
+		<description>Default project category layout for AMC Portfolio.</description>
+		<url>
+			<param name="id" type="category" section="com_amcportfolio" default="0" label="Category" description="PARAMCATSELECT" />
+		</url>
+	</state>
+</metadata>

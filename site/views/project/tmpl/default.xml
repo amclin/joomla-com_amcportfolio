@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="Default Project Layout">
+		<message>
+			Display the details of a specific project in the default template.
+		</message>
+	</layout>
+	<state>
+		<name>Standard Project Layout</name>
+		<description>This is the default project layout template. It simply dumps the details of a project.</description>
+		<url addpath="/administrator/components/com_amcportfolio/elements">
+			<param name="id" type="project" default="0" label="Select Project" description="Select a project to be displayed." />
+		</url>
+		<params>
+		</params>
+	</state>
+</metadata>
