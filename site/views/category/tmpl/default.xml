@@ -2,14 +2,17 @@
 <metadata>
 	<layout title="Default Category Layout">
 		<message>
-			Default the list of projects of a specific category in the default template.
+			AMC Portfolio Standard Category Layout
 		</message>
 	</layout>
-	<state>
-		<name>AMC Portfolio Standard Category Layout</name>
-		<description>Default project category layout for AMC Portfolio.</description>
-		<url>
-			<param name="id" type="category" section="com_amcportfolio" default="0" label="Category" description="PARAMCATSELECT" />
-		</url>
-	</state>
+	<fields name="request">
+		<fieldset name="request">
+			<field name="id" type="category"
+				label="Category"
+				description="PARAMCATSELECT"
+				extension="com_amcportfolio"
+				required="true"
+			/>
+		</fieldset>
+	</fields>
 </metadata>

@@ -18,34 +18,46 @@ jimport( 'joomla.filesystem.file' );
  */
 class AMCPortfolioViewProject extends JView
 {
+	protected $form;
+	protected $item;
+	protected $state;
+	
 	/**
 	 * display method of Project view
 	 * @return void
 	 **/
 	function display($tpl = null)
 	{
-		global $option;
+		// Initialise variables.
+		$this->form	= $this->get('Form');
+		$this->item	= $this->get('Item');
+		$this->state	= $this->get('State');
 
+		// Check for errors.
+		if (count($errors = $this->get('Errors'))) {
+			JError::raiseError(500, implode("\n", $errors));
+			return false;
+		}
+		
 		$lists = array();
 		//get the project
-		$project		=& $this->get('Data');
-		$isNew		= ($project->id < 1);
+		$isNew		= ($this->item->id == 0);
 
-		$text = $isNew ? JText::_( 'New' ) : JText::_( 'Edit' );
-		JToolBarHelper::title(   JText::_( 'AMC Portfolio : Project Editor' ).' : <small>[ ' . $text.' ]</small>' );
-		JToolBarHelper::save();
-		if ($isNew)  {
-			JToolBarHelper::cancel();
-		} else {
-			// for existing items the button is renamed `close`
-			JToolBarHelper::cancel( 'cancel', 'Close' );
-		}
+// 		$text = $isNew ? JText::_( 'New' ) : JText::_( 'Edit' );
+// 		JToolBarHelper::title(   JText::_( 'AMC Portfolio : Project Editor' ).' : <small>[ ' . $text.' ]</small>' );
+// 		JToolBarHelper::save();
+// 		if ($isNew)  {
+// 			JToolBarHelper::cancel();
+// 		} else {
+//			for existing items the button is renamed `close`
+// 			JToolBarHelper::cancel( 'cancel', 'Close' );
+// 		}
 
 		// build the html select list of categories
-		$lists['catid'] 		= JHTML::_('list.category',  'catid', $option, intval( $project->catid ) );
+// 		$lists['catid'] 		= JHTML::_('list.category',  'catid', $option, intval( $project->catid ) );
 
 		// build the html select list for Published state
-		$lists['published'] 	= JHTML::_('select.booleanlist',  'published', 'class="inputbox"', $project->published );
+// 		$lists['published'] 	= JHTML::_('select.booleanlist',  'published', 'class="inputbox"', $project->state );
 
 		// build the html select list for image folders
 			// Get the tree of folders
@@ -81,13 +93,13 @@ class AMCPortfolioViewProject extends JView
 					foreach($imgFiles as $file)
 					{
 						//Add image to list
-						if(eregi( "\.bmp|\.gif|\.jpg|\.png", $file) )
+						if(preg_match( "/\.bmp|\.gif|\.jpg|\.png/i", $file) )
 						{
 							$imageFile = $folder['relname'] . '/' . $file;
 							$images[$folder['relname']][] = JHTML::_('select.option', $imageFile, $file );
 						}
 						//Add movie to list
-						if(eregi( "\.flv|\.mov|\.avi|\.mpg|\.mpeg|\.divx", $file) )
+						if(preg_match( "/\.flv|\.mov|\.avi|\.mpg|\.mpeg|\.divx/i", $file) )
 						{
 							$movieFile = $folder['relname'] . '/' . $file;
 							$movies[$folder['relname']][] = JHTML::_('select.option', $movieFile, $file );
@@ -111,22 +123,22 @@ class AMCPortfolioViewProject extends JView
 		$lists['moviefiles']	= JHTML::_('select.genericlist', $movies['/images'], 'moviefiles', 'class="inputbox" size="10" multiple="multiple" '             , 'value', 'text' );
 
 		// Take the saved image list and make
-		for($i = 0, $n = count($project->images); $i < $n; $i++)
+		for($i = 0, $n = count($this->item->images); $i < $n; $i++)
 		{
-			$image = &$project->images[$i];
+			$image = &$this->item->images[$i];
 			$image->name = JFile::getName($image->image);
 		}
 
 		//Build options for the saved movie list
-		for($i = 0, $n = count($project->movies); $i < $n; $i++)
+		for($i = 0, $n = count($this->item->movies); $i < $n; $i++)
 		{
-			$movie = &$project->movies[$i];
+			$movie = &$this->item->movies[$i];
 			$movie->name = JFile::getName($movie->movie);
 		}
 
 			$javascript     = "onchange=\"previewImage( 'imagelist', 'view_imagelist', '" . JURI::root() . "images/' ) \"";
-		$lists['imagelist']		= JHTML::_('select.genericlist', $project->images, 'imagelist', 'class="inputbox" size="10" '. $javascript, 'image', 'name' );
-		$lists['movielist']		= JHTML::_('select.genericlist', $project->movies, 'movielist', 'class="inputbox" size="10" '             , 'movie', 'name' );
+		$lists['imagelist']		= JHTML::_('select.genericlist', $this->item->images, 'imagelist', 'class="inputbox" size="10" '. $javascript, 'image', 'name' );
+		$lists['movielist']		= JHTML::_('select.genericlist', $this->item->movies, 'movielist', 'class="inputbox" size="10" '             , 'movie', 'name' );
 
 		//Allow Joomla WYSIWYG editor
 		$editor =& JFactory::getEditor();
@@ -136,10 +148,44 @@ class AMCPortfolioViewProject extends JView
 		$this->assignRef('images',		$images);
 		$this->assignRef('movies',      $movies);
 		$this->assignRef('lists',		$lists);
-		$this->assignRef('project',		$project);
+		$this->assignRef('project',		$this->item);
 		$this->assignRef('editor',		$editor );
 
+		$this->addToolbar();
 		parent::display($tpl);
+	}
+	
+	
+	/**
+	* Add the page title and toolbar.
+	*
+	* @since	4.0
+	*/
+	protected function addToolbar()
+	{
+		JRequest::setVar('hidemainmenu', true);
+		
+		$user		= JFactory::getUser();
+		$userId		= $user->get('id');
+		$isNew		= ($this->item->id == 0);
+		$checkedOut	= !($this->item->checked_out == 0 || $this->item->checked_out == $userId);
+		
+		$text = $isNew ? JText::_( 'New' ) : JText::_( 'Edit' );
+		JToolBarHelper::title(   JText::_( 'AMC Portfolio : Project Editor' ).' : <small>[ ' . $text.' ]</small>' );
+		
+		// If not checked out, can save the item.
+		if (!$checkedOut) {
+			JToolBarHelper::apply('project.apply');
+			JToolBarHelper::save('project.save');
+			JToolBarHelper::save2new('project.save2new');
+		}
+	
+		if (empty($this->item->id))  {
+			JToolBarHelper::cancel('project.cancel');
+		}
+		else {
+			JToolBarHelper::cancel('project.cancel', 'JTOOLBAR_CLOSE');
+		}
 	}
 }
 ?>

@@ -57,35 +57,6 @@ class AMCPortfolioModelProjects extends JModelList
 	}
 
 	/**
-	* Method to auto-populate the model state.
-	*
-	* Note. Calling getState in this method will result in recursion.
-	*
-	* @return	void
-	* @since	4.0
-	*/
-	protected function populateState($ordering = null, $direction = null)
-	{
-		// Initialise variables.
-		$app = JFactory::getApplication();
-	
-		$search = $this->getUserStateFromRequest($this->context.'.filter.search', 'filter_search');
-		$this->setState('filter.search', $search);
-	
-		$published = $this->getUserStateFromRequest($this->context.'.filter.published', 'filter_published', '');
-		$this->setState('filter.published', $published);
-	
-		$categoryId = $this->getUserStateFromRequest($this->context.'.filter.category_id', 'filter_category_id');
-		$this->setState('filter.category_id', $categoryId);
-
-		$orderCol = $this->getUserStateFromRequest($this->context.'.list.ordering', 'filter_category_id');
-		$this->setState('filter.category_id', $categoryId);
-		
-		// List state information.
-		parent::populateState('a.ordering', 'asc');
-	}
-	
-	/**
 	 * Returns the query
 	 * @return string The query to be used to retrieve the rows from the database
 	 */
@@ -191,18 +162,29 @@ class AMCPortfolioModelProjects extends JModelList
 		}
 	
 		// Add the list ordering clause.
-		$orderCol	= $this->state->get('list.ordering');
-		$orderDirn	= $this->state->get('list.direction');
-		if ($orderCol == 'a.ordering' || $orderCol == 'category_title') {
-			$orderCol = 'category_title '.$orderDirn.', a.ordering';
-		}
+		$orderCol	= $this->state->get('list.ordering','ordering');
+		$orderDirn	= $this->state->get('list.direction','ASC');
+// 		if ($orderCol == 'ordering' || $orderCol == 'category_title') {
+// 			$orderCol = 'category_title '.$orderDirn.', ordering';
+// 		}
 		$query->order($db->getEscaped($orderCol.' '.$orderDirn));
 	
 		//echo nl2br(str_replace('#__','jos_',$query));
 		return $query;
 	}
 	
-	
+	/**
+	 * Override default getItems to include project images
+	 */
+ 	function getItems() {
+ 		$items = parent::getItems();
+ 		foreach($items as &$item) {
+ 			$model = JModel::getInstance('project','AMCPortfolioModel', array('ignore_request' => true));
+ 			$model->setState('project.id',$item->id);
+ 			$item->images = $model->getImages(); 
+ 		}
+ 		return $items;
+ 	}
 	
 	/**
 	 * Returns a combined set of WHERE clauses for the SQL query

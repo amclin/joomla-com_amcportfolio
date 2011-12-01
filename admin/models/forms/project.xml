@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+	<!-- $Id: banner.xml 21329 2011-05-11 04:15:59Z eddieajau $ -->
+<form>
+	<fieldset name="details"
+		addfieldpath="/administrator/components/com_amcportfolio/models/fields"
+	>
+		<field name="id" type="text" default="0"
+			readonly="true" class="readonly"
+			label="JGLOBAL_FIELD_ID_LABEL" 	description ="JGLOBAL_FIELD_ID_DESC" />
+
+		<field name="title" type="text" class="inputbox"
+			size="40" label="Project Title"
+			description="" required="true" />
+
+		<field name="alias" type="text" class="inputbox"
+			size="40" label="Project Alias"
+			description="" />
+
+		<field name="catid" type="category" extension="com_amcportfolio"
+			label="JCATEGORY" description=""
+			class="inputbox" required="true"
+		>
+		</field>
+
+		<field name="description" type="editor"
+			label="Project Description"
+			class="inputbox"
+			filter="safehtml"
+			buttons="true"
+			hide="readmore,pagebreak"
+			 />
+	</fieldset>
+
+	<fieldset name="publish"
+		label="COM_BANNERS_GROUP_LABEL_PUBLISHING_DETAILS"
+	>
+
+
+		<field name="published" type="list"
+			label="JSTATUS" description="Set project state"
+			class="inputbox" size="1" default="1" >
+			<option value="1">JPUBLISHED</option>
+			<option value="0">JUNPUBLISHED</option>
+		</field>
+		<field name="ordering" type="ordering" class="inputbox"
+
+			label="JFIELD_ORDERING_LABEL" description="JFIELD_ORDERING_DESC" />
+
+		<field name="hits" type="hits" default="0"
+			label="Hits" description="Number of Visits" />
+
+
+	</fieldset>
+</form>

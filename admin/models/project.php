@@ -10,12 +10,12 @@
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die();
 
-jimport('joomla.application.component.model');
+jimport('joomla.application.component.modeladmin');
 
 /**
  * AMCPortfolio Project Model
  */
-class AMCPortfolioModelProject extends JModel
+class AMCPortfolioModelProject extends JModelAdmin
 {
 	/**
 	 * Constructor that retrieves the ID from the request
@@ -23,14 +23,57 @@ class AMCPortfolioModelProject extends JModel
 	 * @access	public
 	 * @return	void
 	 */
-	function __construct()
+// 	function __construct()
+// 	{
+// 		parent::__construct();
+
+// 		$array = JRequest::getVar('cid',  0, '', 'array');
+// 		$this->setId((int)$array[0]);
+// 	}
+
+	/**
+	* Method to get the record form.
+	*
+	* @param	array	$data		Data for the form.
+	* @param	boolean	$loadData	True if the form is to load its own data (default case), false if not.
+	* @return	mixed	A JForm object on success, false on failure
+	* @since	4.0
+	*/
+	public function getForm($data = array(), $loadData = true)
 	{
-		parent::__construct();
-
-		$array = JRequest::getVar('cid',  0, '', 'array');
-		$this->setId((int)$array[0]);
-	}
-
+		// Get the form.
+		$form = $this->loadForm('com_amcportfolio.project', 'project', array('control' => 'jform', 'load_data' => $loadData));
+		if (empty($form)) {
+			return false;
+		}
+	
+		// Determine correct permissions to check.
+// 		if ($this->getState('project.id')) {
+			// Existing record. Can only edit in selected categories.
+// 			$form->setFieldAttribute('catid', 'action', 'core.edit');
+// 		} else {
+			// New record. Can only create in selected categories.
+// 			$form->setFieldAttribute('catid', 'action', 'core.create');
+// 		}
+	
+		// Modify the form based on access controls.
+// 		if (!$this->canEditState((object) $data)) {
+			// Disable fields for display.
+// 			$form->setFieldAttribute('ordering', 'disabled', 'true');
+// 			$form->setFieldAttribute('published', 'disabled', 'true');
+	
+			// Disable fields while saving.
+			// The controller has already verified this is a record you can edit.
+// 			$form->setFieldAttribute('ordering', 'filter', 'unset');
+// 			$form->setFieldAttribute('published', 'filter', 'unset');
+// 		}
+	
+		return $form;
+	}	
+	
+	
+	
+	
 	/**
 	 * Method to set the project identifier
 	 *
@@ -46,23 +89,42 @@ class AMCPortfolioModelProject extends JModel
 	}
 
 	/**
-	 * Method to get a project
-	 * @return object with data
+	 * Method to get a single project
+	 * @see JModelAdmin::getItem()
+	 * @return object
+	 * @since 4.0
 	 */
-	function &getData()
-	{
-		// Load the data
-		if (empty( $this->_data )) {
-			$this->_data = $this->getTable();
-			$this->_data->load($this->_id);
-
-			$this->getImages();
-			$this->getMovies();
-		}
-
-		return $this->_data;
+	public function getItem($pk = null) {
+		$item = parent::getItem($pk);
+		$item->images = $this->getImages();
+		$item->movies = $this->getMovies();
+		return $item;
 	}
-
+	
+	/**
+	* Method to get the data that should be injected in the form.
+	*
+	* @return	mixed	The data for the form.
+	* @since	4.0
+	*/
+	protected function loadFormData()
+	{
+		// Check the session for previously entered form data.
+		$data = JFactory::getApplication()->getUserState('com_amcportfolio.edit.roject.data', array());
+	
+		if (empty($data)) {
+			$data = $this->getItem();
+	
+			// Prime some default values.
+			if ($this->getState('project.id') == 0) {
+				$app = JFactory::getApplication();
+				$data->set('catid', JRequest::getInt('catid', $app->getUserState('com_amcportolio.projects.filter.category_id')));
+			}
+		}
+	
+		return $data;
+	}	
+	
 	/**
 	 * Method to get the list of images for this project
 	 */
@@ -71,7 +133,7 @@ class AMCPortfolioModelProject extends JModel
 		if(!isset($this->_data->images))
 		{
 			$query = ' SELECT * FROM #__amcportfolio_images' .
-					 ' WHERE projectid = '.$this->_id .
+					 ' WHERE projectid = '.$this->getState('project.id') .
 					 ' ORDER BY ID';  // Preserves the image ordering
 
 			$this->_db->setQuery($query);
@@ -90,7 +152,7 @@ class AMCPortfolioModelProject extends JModel
 		if(!isset($this->_data->movies))
 		{
 			$query = ' SELECT * FROM #__amcportfolio_movies' .
-					 ' WHERE projectid = '.$this->_id .
+					 ' WHERE projectid = '.$this->getState('project.id') .
 					 ' ORDER BY ID';  // Preserves the image ordering
 
 			$this->_db->setQuery($query);
@@ -100,55 +162,57 @@ class AMCPortfolioModelProject extends JModel
 	}
 
 	/**
-	 * Method to store a record
-	 *
-	 * @access	public
-	 * @return	boolean	True on success
+	 * Save form data
+	 * @see JModelAdmin::save()
+	 * 
 	 */
-	function store()
-	{
+	public function save($data) {
 		$row =& $this->getTable();
 
-		$data = JRequest::get( 'post' );
+		$jinput = JFactory::getApplication()->input;
+		$data['images'] = $jinput->post->get('images',NULL,'string');
+		$data['movies'] = $jinput->post->get('movies',NULL,'string');
+		
+		//$data = JRequest::get( 'post' );
 		//Allow raw data for description text to allow HTML formatting
-		$data['description'] = JRequest::getVar('description', '', 'post', 'string', JREQUEST_ALLOWRAW);
-
+		//$data['description'] = JRequest::getVar('description', '', 'post', 'string', JREQUEST_ALLOWRAW);
+		
 		$images = explode("|", trim($data['images']));
 		$movies = explode("|", trim($data['movies']));
-
+		
 		// Bind the form fields to the project table
 		if (!$row->bind($data)) {
 			$this->setError($this->_db->getErrorMsg());
 			return false;
 		}
-
+		
 		$isNew = ($row->id == 0);
-
+		
 		// Make sure the project record is valid
 		if (!$row->check()) {
 			$this->setError($this->_db->getErrorMsg());
 			return false;
 		}
-
+		
 		// Store the project table to the database
 		if (!$row->store()) {
 			$this->setError($this->_db->getErrorMsg() );
 			return false;
 		}
-
+		
 		if(!$isNew)
 		{
 			// For existing projects, drop the list of images
 			$query = "DELETE FROM #__amcportfolio_images WHERE projectid = " . $row->id;
 			$this->_db->setQuery( $query );
 			$this->_db->query();
-
+		
 			// For existing projects, drop the list of movies
 			$query = "DELETE FROM #__amcportfolio_movies WHERE projectid = " . $row->id;
 			$this->_db->setQuery( $query );
 			$this->_db->query();
 		}
-
+		
 		//Insert images into image table
 		foreach($images as $image)
 		{
@@ -156,13 +220,13 @@ class AMCPortfolioModelProject extends JModel
 			if($image != '')
 			{
 				$query = 'INSERT INTO #__amcportfolio_images'
-					.' (projectid,image)'
-					.' VALUES (' . (int)$row->id . ', "' . $image . '" )';
+				.' (projectid,image)'
+				.' VALUES (' . (int)$row->id . ', "' . $image . '" )';
 				$this->_db->setQuery( $query);
 				$this->_db->query();
 			}
 		}
-
+		
 		//Insert movies into movie table
 		foreach($movies as $movie)
 		{
@@ -170,14 +234,15 @@ class AMCPortfolioModelProject extends JModel
 			if($movie != '')
 			{
 				$query = 'INSERT INTO #__amcportfolio_movies'
-					.' (projectid,movie)'
-					.' VALUES (' . (int)$row->id . ', "' . $movie . '" )';
+				.' (projectid,movie)'
+				.' VALUES (' . (int)$row->id . ', "' . $movie . '" )';
 				$this->_db->setQuery( $query);
 				$this->_db->query();
 			}
 		}
 		return true;
 	}
+
 
 	/**
 	 * Method to delete record(s)
@@ -227,71 +292,6 @@ class AMCPortfolioModelProject extends JModel
 		return true;
 	}
 
-	/**
-	 * Method to checkin/unlock the project
-	 *
-	 * @access	public
-	 * @return	boolean	True on success
-	 */
-	function checkin()
-	{
-		if ($this->_id)
-		{
-			$weblink = & $this->getTable();
-			if(! $weblink->checkin($this->_id)) {
-				$this->setError($this->_db->getErrorMsg());
-				return false;
-			}
-		}
-		return false;
-	}
-
-	/**
-	 * Method to checkout/lock the project
-	 *
-	 * @access	public
-	 * @param	int	$uid	User ID of the user checking the article out
-	 * @return	boolean	True on success
-	 */
-	function checkout($uid = null)
-	{
-		if ($this->_id)
-		{
-			// Make sure we have a user id to checkout the article with
-			if (is_null($uid)) {
-				$user	=& JFactory::getUser();
-				$uid	= $user->get('id');
-			}
-			// Lets get to it and checkout the thing...
-			$weblink = & $this->getTable();
-			if(!$weblink->checkout($uid, $this->_id)) {
-				$this->setError($this->_db->getErrorMsg());
-				return false;
-			}
-
-			return true;
-		}
-		return false;
-	}
-
-	/**
-	 * Tests if project is checked out
-	 *
-	 * @access	public
-	 * @param	int	A user id
-	 * @return	boolean	True if checked out
-	 */
-	function isCheckedOut( $uid=0 )
-	{
-		if ($this->_loadData())
-		{
-			if ($uid) {
-				return ($this->_data->checked_out && $this->_data->checked_out != $uid);
-			} else {
-				return $this->_data->checked_out;
-			}
-		}
-	}
 
 	/**
 	 * Moves the collection up or down in the ordering

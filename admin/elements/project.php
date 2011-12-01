@@ -10,10 +10,13 @@
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die();
 
+jimport('joomla.html.html');
+jimport('joomla.form.formfield');
+
 /**
  * Provides a list of projects for a popup select
  */
-class JElementProject extends JElement
+class JFormFieldProject extends JFormField
 {
 	/**
 	 * Element name
@@ -21,10 +24,9 @@ class JElementProject extends JElement
 	 * @access	protected
 	 * @var		string
 	 */
-	var	$_name = 'Project';
-
-	function fetchElement($name, $value, &$node, $control_name)
-	{
+	function getInput()
+	{	
+		$options = array();
 		$db =& JFactory::getDBO();
 
 		$query = 'SELECT p.id, p.title'
@@ -35,8 +37,10 @@ class JElementProject extends JElement
 		$db->setQuery( $query );
 		$options = $db->loadObjectList();
 
-		array_unshift($options, JHTML::_('select.option', '0', '- '.JText::_('Select Project').' -', 'id', 'title'));
+ 		foreach($options as &$option) {
+ 			$option->title = $option->title.'  (id:'.$option->id.')';
+ 		}
 
-		return JHTML::_('select.genericlist',  $options, ''.$control_name.'['.$name.']', 'class="inputbox"', 'id', 'title', $value, $control_name.$name );
+ 		return JHTML::_('select.genericlist',  $options, 'jform[request][id]', 'class="inputbox"', 'id', 'title', $this->value, 'jform_request_id' );
 	}
 }

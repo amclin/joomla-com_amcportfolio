@@ -19,15 +19,16 @@ class AMCPortfolioController extends JController
 	 *
 	 * @access	public
 	 */
-	function display()
+	protected $default_view = 'projects';
+	
+	public function display($cachable = false, $urlparams = false)
 	{
-		//Set the default view if none exists
-		$view = JRequest::getCmd('view');
-		if(empty($view)) {
-			JRequest::setVar('view', 'projects');
-		};
+		$layout = JRequest::getCmd('layout', 'default');
+		$id		= JRequest::getInt('id');
 
 		parent::display();
+		
+		return $this;
 	}
 }
 ?>
