@@ -1,0 +1,1 @@
+ALTER TABLE `#__amcportfolio` ADD `featured` BOOLEAN  NULL  DEFAULT '0' AFTER `outside_link_text`;

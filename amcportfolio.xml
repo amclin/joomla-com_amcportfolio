@@ -7,7 +7,7 @@
 	<authorEmail>joomla@anthonymclin.com</authorEmail>
 	<authorUrl>http://www.anthonymclin.com</authorUrl>
 	<license>GPL v2</license>
-	<version>4.0</version>
+	<version>4.1</version>
 	<!-- 3.1 adds support for movies -->
 	<!-- 3.2 adds support for external links -->
 	<!-- 3.2.1 adds filtering in admin list view -->
@@ -28,6 +28,12 @@
 			<file charset="utf8" driver="mysql">sql/uninstall.sql</file>
 		</sql>
 	</uninstall>
+
+	<update>
+		<schemas>
+			<schemapath type="mysql">sql/updates</schemapath> 
+		</schemas>
+	</update>
 
 	<!-- Site Main File Copy Section -->
 	<files folder="site">
