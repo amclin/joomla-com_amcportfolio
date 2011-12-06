@@ -197,7 +197,7 @@ class AMCPortfolioModelProjects extends JModelList
 		if ($orderCol == 'a.ordering' || $orderCol == 'category_title') {
 			$orderCol = 'category_title '.$orderDirn.', a.ordering';
 		}
-		$query->order($db->getEscaped($orderCol.' '.$orderDirn));
+		$query->order($db->getEscaped('a.featured DESC, '.$orderCol.' '.$orderDirn));
 	
 		//echo nl2br(str_replace('#__','jos_',$query));
 		return $query;

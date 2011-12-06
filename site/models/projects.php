@@ -119,7 +119,8 @@ class AMCPortfolioModelProjects extends JModelList
 						'a.checked_out AS checked_out,'.
 						'a.checked_out_time AS checked_out_time, a.catid AS catid,' .
 						'a.hits AS hits,'.
-						'a.published AS published, a.ordering AS ordering'
+						'a.published AS published, a.ordering AS ordering,'.
+						'a.featured AS featured'
 			)
 		);
 		$query->from('`#__amcportfolio` as a');
@@ -167,7 +168,7 @@ class AMCPortfolioModelProjects extends JModelList
 // 		if ($orderCol == 'ordering' || $orderCol == 'category_title') {
 // 			$orderCol = 'category_title '.$orderDirn.', ordering';
 // 		}
-		$query->order($db->getEscaped($orderCol.' '.$orderDirn));
+		$query->order($db->getEscaped('a.featured DESC, '.$orderCol.' '.$orderDirn));
 	
 		//echo nl2br(str_replace('#__','jos_',$query));
 		return $query;
