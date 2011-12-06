@@ -98,10 +98,18 @@ div.imgBorder a {
 
 #sortable-images {
 	height:	600px;
+	max-width: 800px;
 	background:	#FFF;
+	overflow: auto;
+	resize:both;
 }
 .imgOutline {
 	background: #FFF;
+	resize: none;
+	float: left;
+	list-style: none;
+	display: block;
+	cursor: move;
 }
 .imgOutline .image {
 	padding: 0;
