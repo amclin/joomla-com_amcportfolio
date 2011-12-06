@@ -148,7 +148,8 @@ class AMCPortfolioModelProjects extends JModelList
 						'a.checked_out AS checked_out,'.
 						'a.checked_out_time AS checked_out_time, a.catid AS catid,' .
 						'a.hits AS hits,'.
-						'a.published AS published, a.ordering AS ordering'
+						'a.published AS published, a.ordering AS ordering,'.
+						'a.featured AS featured'
 			)
 		);
 		$query->from('`#__amcportfolio` as a');

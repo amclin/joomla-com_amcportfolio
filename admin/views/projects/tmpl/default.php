@@ -65,6 +65,9 @@ $saveOrder	= $listOrder=='ordering';
 			<th width="5%">
 				<?php echo JHtml::_('grid.sort', 'JSTATUS', 'published', $listDirn, $listOrder); ?>
 			</th>
+			<th width="5%">
+				<?php echo JHtml::_('grid.sort', 'Featured', 'featured', $listDirn, $listOrder); ?>
+			</th>
 			<th width="10%">
 				<?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ORDERING', 'a.ordering', $listDirn, $listOrder); ?>
 				<?php // if ($canOrder && $saveOrder) :?>
@@ -123,6 +126,9 @@ $saveOrder	= $listOrder=='ordering';
 				</td>
 				<td class="center">
 					<?php echo JHtml::_('jgrid.published', $item->published, $i, 'projects.', $canChange, 'cb'); ?>
+				</td>
+				<td class="center">
+					<?php echo JHtml::_('jgrid.published', $item->featured, $i, 'projects.featured_', $canChange);?>
 				</td>
 				<td class="order">
 					<?php if ($canChange) : ?>

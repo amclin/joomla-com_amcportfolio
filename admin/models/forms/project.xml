@@ -45,7 +45,13 @@
 		<field name="ordering" type="ordering" class="inputbox"
 
 			label="JFIELD_ORDERING_LABEL" description="JFIELD_ORDERING_DESC" />
-
+		<field name="featured" type="list" default="0"
+			label="Featured Project"
+			description="Flag this project to be called out in special lists or ahead of other projects."
+		>
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
 		<field name="hits" type="hits" default="0"
 			label="Hits" description="Number of Visits" />
 

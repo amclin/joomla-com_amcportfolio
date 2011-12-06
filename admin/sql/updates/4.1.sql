@@ -1,0 +1,1 @@
+ALTER TABLE `#__amcportfolio` ADD `featured` BINARY  NULL  DEFAULT '0' AFTER `outside_link_text`;
