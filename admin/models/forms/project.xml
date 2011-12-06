@@ -15,6 +15,11 @@
 		<field name="alias" type="text" class="inputbox"
 			size="40" label="Project Alias"
 			description="" />
+			
+		<field name="teaser" type="text" class="inputbox"
+			size="40" label="Teaser Line"
+			description="" />
+		
 
 		<field name="catid" type="category" extension="com_amcportfolio"
 			label="JCATEGORY" description=""

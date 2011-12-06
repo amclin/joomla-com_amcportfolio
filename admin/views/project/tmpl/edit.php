@@ -117,12 +117,10 @@ $document->addStyleSheet(JURI::base().'components/com_amcportfolio/assets/images
 		</tr>
 		<tr>
 			<td width="100" align="right" class="key">
-				<label for="title">
-					<?php echo JText::_( 'Teaser Line' ); ?>:
-				</label>
+				<?php echo $this->form->getLabel('teaser'); ?>
 			</td>
 			<td>
-				<input class="text_area" type="text" name="teaser" id="teaser" size="64" maxlength="255" value="<?php echo $this->project->teaser;?>" />
+				<?php echo $this->form->getInput('teaser'); ?>
 			</td>
 			<td valign="top" align="right" class="key">
 
