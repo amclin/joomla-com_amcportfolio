@@ -98,6 +98,8 @@ class AMCPortfolioViewProjects extends JView
 		JToolBarHelper::editList('project.edit');
 		JToolBarHelper::publish('projects.publish', 'JTOOLBAR_PUBLISH', true);
 		JToolBarHelper::unpublish('projects.unpublish', 'JTOOLBAR_UNPUBLISH', true);
+		JToolBarHelper::custom('projects.featured_publish', 'featured.png', 'featured_f2.png', 'JFEATURED', true);
+		JToolBarHelper::custom('projects.featured_unpublish', 'remove.png', 'remove.png', 'UnFeature', true);
 		JToolBarHelper::deleteList('','projects.delete');
 	}
 }
