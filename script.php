@@ -12,6 +12,11 @@ class com_amcportfolioInstallerScript {
 	private $minimum_update_release = '4.0';
 	private $minimum_joomla_release = '1.7.0';
 	
+	function update($parent) {
+		$jversion = new JVersion();
+		echo 'Upgraded from '.$this->getParam('version').' to '.$this->release;
+	}
+	
 	/**
 	* Pre-installation function
 	* runs before any installation
@@ -38,7 +43,7 @@ class com_amcportfolioInstallerScript {
 		//Verify that we are updating from a safe version of AMCPortfolio
 		if( $type == 'update' ) {
 			$oldRelease = $this->getParam('version');
-			if( version_compare( $oldRelease, $this->minimum_update_release, 'le' ) ) {
+			if( version_compare( $oldRelease, $this->minimum_update_release, 'lt' ) ) {
 				Jerror::raiseWarning(null, 'The existing installation is to old to upgrade. Cannot update AMCPortfolio '. $oldRelease . ' to '. $this->release);
 				return false;
 			}

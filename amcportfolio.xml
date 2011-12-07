@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <extension type="component" version="1.7" method="upgrade">
 	<name>AMCPortfolio</name>
+	<creationDate>December 2011</creationDate>
 	<author>Anthony McLin</author>
-	<creationDate>October 2011</creationDate>
+	<copyright>2011 All Rights Reserved</copyright>
+	<license>GPL v2</license>
 	<authorEmail>joomla@anthonymclin.com</authorEmail>
 	<authorUrl>http://www.anthonymclin.com</authorUrl>
-	<license>GPL v2</license>
 	<version>4.1</version>
 	<!-- 3.1 adds support for movies -->
 	<!-- 3.2 adds support for external links -->
@@ -15,25 +15,9 @@
 	<!-- 3.2.3 fixes a bug where you couldn't add images to projects on Windows servers -->
 	<!-- 3.2.4 fixes a bug where projects were reordering on save -->
 	<!-- 4.0 rebuilt for Joomla 1.7 -->
+	<!-- 4.1 Added "featured" project and ability to update from AMCPortfolio 4.0 -->
 	<description>This component displays custom built portfolios. It is a complete rewrite from scratch of previous versions of the AMC Portfolio compnent.</description>
-
-	<install>
-		<sql>
-			<file charset="utf8" driver="mysql">sql/install.sql</file>
-		</sql>
-	</install>
-
-	<uninstall>
-		<sql>
-			<file charset="utf8" driver="mysql">sql/uninstall.sql</file>
-		</sql>
-	</uninstall>
-
-	<update>
-		<schemas>
-			<schemapath type="mysql">sql/updates</schemapath> 
-		</schemas>
-	</update>
+	<scriptfile>script.php</scriptfile>
 
 	<!-- Site Main File Copy Section -->
 	<files folder="site">
@@ -47,9 +31,8 @@
 		<folder>views/project/tmpl</folder>	
 
 		<filename>assets/imagesorter.css</filename>
-		<filename>assets/imagerSorter.js</filename>
 		
-		<filename>helpders/category.php</filename>
+		<filename>helpers/category.php</filename>
 		
 		<fielname>models/category.php</fielname>
 		<fielname>models/project.php</fielname>
@@ -87,6 +70,7 @@
 			<folder>elements</folder>
 			<folder>models</folder>
 			<folder>models/forms</folder>
+			<folder>sql</folder>
 			<folder>tables</folder>
 			<folder>views</folder>
 			<folder>views/project</folder>
@@ -117,4 +101,20 @@
 			<filename>controller.php</filename>
 		</files>
 	</administration>
+	
+	<install>
+		<sql>
+			<file driver="mysql" charset="utf8">sql/install.sql</file>
+		</sql>
+	</install>
+	<uninstall>
+		<sql>
+			<file driver="mysql" charset="utf8">sql/uninstall.sql</file>
+		</sql>
+	</uninstall>
+	<update>
+		<schemas>
+			<schemapath type="mysql">sql/updates</schemapath>
+		</schemas>
+	</update>
 </extension>
