@@ -291,6 +291,23 @@ class AMCPortfolioModelProject extends JModelAdmin
 		}
 		return true;
 	}
+	
+	/**
+	* Method to toggle the featured state of a collection.
+	* Wrapper for the Joomla table function. Duplicates publish functionality
+	* @since	4.1
+	* @access	public
+	* @return	boolean	True on success
+	*/
+	function feature($cid, $publish = 1, $uid = null)
+	{
+		$row =& $this->getTable();
+	
+		if (!$row->feature( $cid, $publish, $uid )) {
+			return JError::raiseWarning( 500, $row->getError() );
+		}
+		return true;
+	}
 
 
 	/**
