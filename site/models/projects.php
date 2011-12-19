@@ -116,6 +116,8 @@ class AMCPortfolioModelProjects extends JModelList
 			$this->getState(
 						'list.select',
 						'a.id AS id, a.title AS title, a.alias AS alias,'.
+						'a.teaser AS teaser,'.
+						'a.description AS description,'.
 						'a.checked_out AS checked_out,'.
 						'a.checked_out_time AS checked_out_time, a.catid AS catid,' .
 						'a.hits AS hits,'.
