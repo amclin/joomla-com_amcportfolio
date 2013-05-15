@@ -16,7 +16,7 @@ CREATE TABLE `#__amcportfolio` (
   `description` text,
   `outside_link` varchar(255) default NULL,
   `outside_link_text` varchar(255) default NULL,
-  `featured` BOOLEAN  NULL  DEFAULT '0',
+  `featured` BOOLEAN  NULL  DEFAULT '0';
   PRIMARY KEY  (`id`),
   KEY `idx_published` (`published`)
 ) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
