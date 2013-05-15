@@ -7,7 +7,7 @@
 	<license>GPL v2</license>
 	<authorEmail>joomla@anthonymclin.com</authorEmail>
 	<authorUrl>http://www.anthonymclin.com</authorUrl>
-	<version>4.1.1</version>
+	<version>4.1.2</version>
 	<!-- 3.1 adds support for movies -->
 	<!-- 3.2 adds support for external links -->
 	<!-- 3.2.1 adds filtering in admin list view -->
@@ -17,6 +17,7 @@
 	<!-- 4.0 rebuilt for Joomla 1.7 -->
 	<!-- 4.1 Added "featured" project and ability to update from AMCPortfolio 4.0 -->
 	<!-- 4.1.1 Add ability to call all data of projects when viewing category -->
+	<!-- 4.1.2 Fix typo in install script -->
 	<description>This component displays custom built portfolios. It is a complete rewrite from scratch of previous versions of the AMC Portfolio compnent.</description>
 	<scriptfile>script.php</scriptfile>
 
