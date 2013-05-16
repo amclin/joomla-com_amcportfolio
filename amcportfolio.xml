@@ -34,7 +34,6 @@
 		<folder>views/project/tmpl</folder>	
 
 		<filename>assets/imagesorter.css</filename>
-		<filename>assets/script.js</filename>
 		
 		<filename>helpers/category.php</filename>
 		
@@ -83,6 +82,7 @@
 			<folder>views/projects/tmpl</folder>
 		
 			<filename>assets/imagesorter.css</filename>
+			<filename>assets/script.js</filename>
 			
 			<filename>controllers/project.php</filename>
 			<filename>controllers/projects.php</filename>
