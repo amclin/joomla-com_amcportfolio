@@ -105,6 +105,29 @@ class AMCPortfolioViewCategory extends JViewLegacy
 // 			$k = 1 - $k;
 // 		}
 
+		
+		
+		$title = $params->get('page_title', '');
+		if (empty($title))
+		{
+			$title = $app->getCfg('sitename');
+		}
+		elseif ($app->getCfg('sitename_pagetitles', 0) == 1)
+		{
+			$title = JText::sprintf('JPAGETITLE', $app->getCfg('sitename'), $title);
+		}
+		elseif ($app->getCfg('sitename_pagetitles', 0) == 2)
+		{
+			$title = JText::sprintf('JPAGETITLE', $title, $app->getCfg('sitename'));
+		}
+		
+		$this->document->setTitle($title);
+		
+		
+		
+		
+		
+
 		$this->assignRef('params',		$params);
 		$this->assignRef('state',		$state);
 		$this->assignRef('category',	$category);
