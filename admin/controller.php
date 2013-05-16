@@ -12,7 +12,7 @@ jimport('joomla.application.component.controller');
 /**
  * AMCPortfolio Component Controller
  */
-class AMCPortfolioController extends JController
+class AMCPortfolioController extends JControllerLegacy
 {
 	/**
 	 * Method to display the view

@@ -12,11 +12,12 @@ defined('_JEXEC') or die();
 
 jimport( 'joomla.application.component.view' );
 jimport( 'joomla.filesystem.file' );
+jimport( 'joomla.filesystem.folder');
 
 /**
  * Project View
  */
-class AMCPortfolioViewProject extends JView
+class AMCPortfolioViewProject extends JViewLegacy
 {
 	protected $form;
 	protected $item;
@@ -61,20 +62,20 @@ class AMCPortfolioViewProject extends JView
 
 		// build the html select list for image folders
 			// Get the tree of folders
-			$folders = JFolder::listFolderTree(JPATH_ROOT.DS.'images','', 7);
+			$folders = JFolder::listFolderTree(JPATH_ROOT.DIRECTORY_SEPARATOR .'images','', 7);
 
 			// Make sure the root images folder is an option
 			$imagefolder = array();
 			$imagefolder[0]['id'] 		= 0;
 			$imagefolder[0]['parent'] 	= NULL;
 			$imagefolder[0]['name'] 	= '/';
-			$imagefolder[0]['fullname'] = JPATH_ROOT . DS . 'images';
+			$imagefolder[0]['fullname'] = JPATH_ROOT . DIRECTORY_SEPARATOR  . 'images';
 			$imagefolder[0]['relname'] 	= '/images';
 			$folders = array_merge( $imagefolder, $folders);
 
 			//Ensure we get URL valid slashes on Windows systems			
 			foreach($folders as $key=>$folder) {
-				$folders[$key]['relname'] = str_replace(DS,'/',$folder['relname']);			
+				$folders[$key]['relname'] = str_replace(DIRECTORY_SEPARATOR ,'/',$folder['relname']);			
 			}
 			
 //TODO: Parse Folders list and drop any entries without images in them
@@ -141,7 +142,7 @@ class AMCPortfolioViewProject extends JView
 		$lists['movielist']		= JHTML::_('select.genericlist', $this->item->movies, 'movielist', 'class="inputbox" size="10" '             , 'movie', 'name' );
 
 		//Allow Joomla WYSIWYG editor
-		$editor =& JFactory::getEditor();
+		$editor = JFactory::getEditor();
 
 		// Set template variables
 		$this->assignRef('folders',		$folders);
@@ -171,7 +172,7 @@ class AMCPortfolioViewProject extends JView
 		$checkedOut	= !($this->item->checked_out == 0 || $this->item->checked_out == $userId);
 		
 		$text = $isNew ? JText::_( 'New' ) : JText::_( 'Edit' );
-		JToolBarHelper::title(   JText::_( 'AMC Portfolio : Project Editor' ).' : <small>[ ' . $text.' ]</small>' );
+		JToolBarHelper::title(   JText::_( 'AMC Portfolio : Project Editor' ).' : ' . $text );
 		
 		// If not checked out, can save the item.
 		if (!$checkedOut) {

@@ -18,7 +18,7 @@ if (!JFactory::getUser()->authorise('core.manage', 'com_amcportfolio')) {
 jimport('joomla.application.component.controller');
 
 // Execute the task.
-$controller	= JController::getInstance('AMCPortfolio');
+$controller	= JControllerLegacy::getInstance('AMCPortfolio');
 $controller->execute(JRequest::getCmd('task'));
 $controller->redirect();
 ?>

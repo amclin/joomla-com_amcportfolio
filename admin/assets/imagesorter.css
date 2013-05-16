@@ -40,25 +40,7 @@ div.imgBorder a:hover {
 	cursor: pointer;
 }
 
-div.controls {
-	text-align: center;
-	height: 20px;
-	line-height: 20px;
-	background: #f9fcf9;
-	border-top: 1px solid #ddd;
-}
 
-div.controls input {
-	vertical-align: middle;
-}
-
-div.controls img {
-	vertical-align: middle;
-}
-
-div.controls:hover {
-	display: block;
-}
 
 div.imginfoBorder {
 	background: #f9f9f9;

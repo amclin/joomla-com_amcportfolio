@@ -155,12 +155,12 @@ class AMCPortfolioModelProjects extends JModelList
 		$query->from('`#__amcportfolio` as a');
 	
 		// Join over the users for the checked out user.
-		$query->select('uc.name AS editor');
-		$query->join('LEFT', '#__users AS uc ON uc.id = a.checked_out');
+		$query->select('uc.name AS editor')
+			->join('LEFT', '#__users AS uc ON uc.id=a.checked_out');
 	
 		// Join over the categories.
-		$query->select('c.title AS category_title');
-		$query->join('LEFT', '#__categories AS c ON c.id = a.catid');
+		$query->select('c.title AS category_title')
+			->join('LEFT', '#__categories AS c ON c.id = a.catid');
 	
 		// Join over the image counts per project.
 		//$query->select('COUNT(i.id) AS numimages');
@@ -192,12 +192,12 @@ class AMCPortfolioModelProjects extends JModelList
 		}
 	
 		// Add the list ordering clause.
-		$orderCol	= $this->state->get('list.ordering');
-		$orderDirn	= $this->state->get('list.direction');
+		$orderCol	= $this->state->get('list.ordering', 'ordering');
+		$orderDirn	= $this->state->get('list.direction', 'ASC');
 		if ($orderCol == 'a.ordering' || $orderCol == 'category_title') {
 			$orderCol = 'category_title '.$orderDirn.', a.ordering';
 		}
-		$query->order($db->getEscaped('a.featured DESC, '.$orderCol.' '.$orderDirn));
+		$query->order($db->escape('a.featured DESC, '.$orderCol.' '.$orderDirn));
 	
 		//echo nl2br(str_replace('#__','jos_',$query));
 		return $query;

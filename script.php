@@ -8,7 +8,7 @@ defined('_JEXEC') or die('Restricted access');
 
 class com_amcportfolioInstallerScript {
 	
-	private $release = '4.1';
+	private $release = '4.2';
 	private $minimum_update_release = '4.0';
 	private $minimum_joomla_release = '1.7.0';
 	

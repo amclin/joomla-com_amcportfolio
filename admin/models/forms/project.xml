@@ -15,26 +15,37 @@
 		<field name="alias" type="text" class="inputbox"
 			size="40" label="Project Alias"
 			description="" />
-			
-		<field name="teaser" type="text" class="inputbox"
-			size="40" label="Teaser Line"
-			description="" />
-		
 
 		<field name="catid" type="category" extension="com_amcportfolio"
 			label="JCATEGORY" description=""
 			class="inputbox" required="true"
+			addfieldpath="/administrator/components/com_categories/models/fields"
 		>
 		</field>
-
+	</fieldset>
+	
+	<fieldset name="description">
+		<field name="teaser" type="text" class="inputbox"
+			size="40" label="Teaser Line"
+			description=""
+		/>
+		<field name="outside_link" type="text" class="inputbox"
+			size="255" label="Project Link URL"
+			description="Provide a URL that this project should link to."
+		/>
+		<field name="outside_link_text" type="text"
+			size="255" label="Project Link Text"
+			description="Provide the text to be used in the clickable link."
+		/>
 		<field name="description" type="editor"
 			label="Project Description"
 			class="inputbox"
 			filter="safehtml"
 			buttons="true"
 			hide="readmore,pagebreak"
-			 />
+		/>
 	</fieldset>
+	
 
 	<fieldset name="publish"
 		label="COM_BANNERS_GROUP_LABEL_PUBLISHING_DETAILS"
@@ -61,5 +72,10 @@
 			label="Hits" description="Number of Visits" />
 
 
+	</fieldset>
+	
+	<fieldset name="hidden">
+		<field name="images" type="hidden" default=""/>
+		<field name="movies" type="hidden" default=""/>
 	</fieldset>
 </form>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="component" version="1.7" method="upgrade">
+<extension type="component" version="3.0" method="upgrade">
 	<name>AMCPortfolio</name>
 	<creationDate>December 2011</creationDate>
 	<author>Anthony McLin</author>
@@ -7,7 +7,7 @@
 	<license>GPL v2</license>
 	<authorEmail>joomla@anthonymclin.com</authorEmail>
 	<authorUrl>http://www.anthonymclin.com</authorUrl>
-	<version>4.1.2</version>
+	<version>4.2</version>
 	<!-- 3.1 adds support for movies -->
 	<!-- 3.2 adds support for external links -->
 	<!-- 3.2.1 adds filtering in admin list view -->
@@ -18,6 +18,7 @@
 	<!-- 4.1 Added "featured" project and ability to update from AMCPortfolio 4.0 -->
 	<!-- 4.1.1 Add ability to call all data of projects when viewing category -->
 	<!-- 4.1.2 Fix typo in install script -->
+	<!-- 4.2 Updated for Joomla 3.X; No support for earlier versions -->
 	<description>This component displays custom built portfolios. It is a complete rewrite from scratch of previous versions of the AMC Portfolio compnent.</description>
 	<scriptfile>script.php</scriptfile>
 
@@ -33,6 +34,7 @@
 		<folder>views/project/tmpl</folder>	
 
 		<filename>assets/imagesorter.css</filename>
+		<filename>assets/script.js</filename>
 		
 		<filename>helpers/category.php</filename>
 		
@@ -63,7 +65,7 @@
 		<menu>AMC Portfolio</menu>
 		<submenu>
 			<menu link="option=com_amcportfolio">Projects</menu>
-			<menu link="option=com_categories&amp;extension=com_amcportfolio">Categories</menu>
+			<menu link="option=com_categories&amp;extension=com_amcportfolio" view="categories">Categories</menu>
 		</submenu>
 
 		<files folder="admin">
@@ -101,6 +103,7 @@
 			
 			<filename>amcportfolio.php</filename>
 			<filename>controller.php</filename>
+			<filename>access.xml</filename>
 		</files>
 	</administration>
 	

@@ -15,7 +15,7 @@ jimport( 'joomla.application.component.view' );
 /**
  * Projects View
  */
-class AMCPortfolioViewProjects extends JView
+class AMCPortfolioViewProjects extends JViewLegacy
 {
 	protected $categories;
 	protected $items;
@@ -101,6 +101,23 @@ class AMCPortfolioViewProjects extends JView
 		JToolBarHelper::custom('projects.featured_publish', 'featured.png', 'featured_f2.png', 'JFEATURED', true);
 		JToolBarHelper::custom('projects.featured_unpublish', 'remove.png', 'remove.png', 'UnFeature', true);
 		JToolBarHelper::deleteList('','projects.delete');
+	}
+	
+	/**
+	 * Returns an array of fields the table can be sorted by
+	 *
+	 * @return  array  Array containing the field name to sort by as the key and display text as value
+	 *
+	 * @since   3.0
+	 */
+	protected function getSortFields()
+	{
+		return array(
+				'ordering' => JText::_('JGRID_HEADING_ORDERING'),
+				'a.state' => JText::_('JSTATUS'),
+				'a.name' => JText::_('COM_BANNERS_HEADING_NAME'),
+				'a.id' => JText::_('JGRID_HEADING_ID')
+		);
 	}
 }
 ?>
