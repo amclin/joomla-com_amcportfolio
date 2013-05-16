@@ -19,7 +19,7 @@
 	<!-- 4.1.1 Add ability to call all data of projects when viewing category -->
 	<!-- 4.1.2 Fix typo in install script -->
 	<!-- 4.2 Updated for Joomla 3.X; No support for earlier versions -->
-	<!-- 4.2.1 Improve title rendering in portfolio to match native article settings -->
+	<!-- 4.2.1 Improve title rendering in portfolio to match native article settings; Fix ordering/sorting -->
 	<description>This component displays custom built portfolios. It is a complete rewrite from scratch of previous versions of the AMC Portfolio compnent.</description>
 	<scriptfile>script.php</scriptfile>
 
