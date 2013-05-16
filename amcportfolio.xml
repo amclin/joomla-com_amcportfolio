@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="3.0" method="upgrade">
 	<name>AMCPortfolio</name>
-	<creationDate>December 2011</creationDate>
+	<creationDate>April 2013</creationDate>
 	<author>Anthony McLin</author>
-	<copyright>2011 All Rights Reserved</copyright>
+	<copyright>2031 All Rights Reserved</copyright>
 	<license>GPL v2</license>
 	<authorEmail>joomla@anthonymclin.com</authorEmail>
 	<authorUrl>http://www.anthonymclin.com</authorUrl>
