@@ -10,11 +10,11 @@
 defined('_JEXEC') or die('Restricted access');
 
 // Require the base controller
-require_once (JPATH_COMPONENT.DS.'controller.php');
+require_once (JPATH_COMPONENT.DIRECTORY_SEPARATOR.'controller.php');
 
 // Require specific controller if requested
 if($controller = JRequest::getVar('controller')) {
-	require_once (JPATH_COMPONENT.DS.'controllers'.DS.$controller.'.php');
+	require_once (JPATH_COMPONENT.DIRECTORY_SEPARATOR.'controllers'.DIRECTORY_SEPARATOR.$controller.'.php');
 }
 
 // Create the controller
@@ -28,3 +28,6 @@ $controller->execute( JRequest::getCmd('task'));
 $controller->redirect();
 
 ?>
+
+
+

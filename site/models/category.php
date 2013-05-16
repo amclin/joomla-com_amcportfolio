@@ -326,7 +326,7 @@ class AMCPortfolioModelCategory extends JModelList
 	
 // 			$this->_pagination = $model->getPagination();
 
- 			$model = JModel::getInstance('Projects','AMCPortfolioModel', array('ignore_request' => true));
+ 			$model = JModelLegacy::getInstance('Projects','AMCPortfolioModel', array('ignore_request' => true));
  			$model->setState('params',JFactory::getApplication()->getParams());
  			$model->setState('list.ordering','ordering');
  			$model->setState('list.direction',$this->getState('list.direction','ASC'));

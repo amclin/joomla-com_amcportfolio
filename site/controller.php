@@ -15,14 +15,14 @@ jimport('joomla.application.component.controller');
 /**
  * AMCPortfolio Component Controller
  */
-class AMCPortfolioController extends JController
+class AMCPortfolioController extends JControllerLegacy
 {
 	/**
 	 * Method to show a project view
 	 *
 	 * @access	public
 	 */
-	function display()
+	public function display($cachable = false, $urlparams = array())
 	{
 		// Set a default view if none exists
 		if ( ! JRequest::getCmd( 'view' ) ) {

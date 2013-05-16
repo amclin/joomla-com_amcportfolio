@@ -134,8 +134,8 @@ class AMCPortfolioModelProject extends JModelItem
 				$this->_data->item->params = $registry->toArray();
 			}
 			
-			$this->_data->item->images = $this->getImages();
-			$this->_data->item->movies = $this->getMovies();
+			$this->_data->item->images = $this->getImages($pk);
+			$this->_data->item->movies = $this->getMovies($pk);
 		}
 		
 		return $this->_data->item;
@@ -222,7 +222,7 @@ class AMCPortfolioModelProject extends JModelItem
 		}
 // 		require_once (JPATH_COMPONENT.DS.'models'.DS.'category.php');
 // 		$category = new AMCPortfolioModelCategory();
-		$category = JModel::getInstance('Category','AMCPortfolioModel',array('ignore_request' => true));
+		$category = JModelLegacy::getInstance('Category','AMCPortfolioModel',array('ignore_request' => true));
 		$category->setState('category.id',$id);
 //		$category->setID($this->_data->catid);
 
@@ -238,13 +238,16 @@ class AMCPortfolioModelProject extends JModelItem
 	/**
 	 * Method to get the list of images for this project
 	 */
-	public function &getImages()
+	function getImages($pk = null)
 	{
 		if(!isset($this->_data->images))
 		{
-			$query = ' SELECT * FROM #__amcportfolio_images' .
-					 ' WHERE projectid = '.$this->getState('project.id') .
-					 ' ORDER BY ID';  // Preserves the image ordering
+			$this->_data = new stdClass();
+			$this->_data->images = array();
+			if(!is_null($pk)) {
+				$query = ' SELECT * FROM #__amcportfolio_images' .
+						' WHERE projectid = '. $pk .
+						' ORDER BY ID';  // Preserves the image ordering
 
 			$this->_db->setQuery($query);
 			$this->_data->images = $this->_db->loadObjectList();
@@ -256,24 +259,31 @@ class AMCPortfolioModelProject extends JModelItem
 		}
 		return $this->_data->images;
 	}
+	
+	
 
 	/**
 	 * Method to get the list of movies for this project
 	 * @return	array	List of movies
 	 */
-	public function &getMovies()
+	function getMovies($pk = null)
 	{
 		//Don't reload if we don't have to
 		if(!isset($this->_data->movies))
 		{
-			$query = ' SELECT * FROM #__amcportfolio_movies' .
-					 ' WHERE projectid = '.$this->getState('project.id') .
-					 ' ORDER BY ID';  // Preserves the image ordering
-
-			$this->_db->setQuery($query);
-			$this->_data->movies = $this->_db->loadObjectList();
+			if(!is_null($pk)) {
+				$query = ' SELECT * FROM #__amcportfolio_movies' .
+						 ' WHERE projectid = '. $pk .
+						 ' ORDER BY ID';  // Preserves the image ordering
+	
+				$this->_db->setQuery($query);
+				$this->_data->movies = $this->_db->loadObjectList();
+			} else {
+				$this->_data->movies = array();
+			}
+			
 		}
 		return $this->_data->movies;
 	}
-}
+}}
 ?>

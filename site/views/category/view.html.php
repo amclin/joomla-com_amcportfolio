@@ -17,7 +17,7 @@ jimport( 'joomla.application.component.view');
  *
  * @static
  */
-class AMCPortfolioViewCategory extends JView
+class AMCPortfolioViewCategory extends JViewLegacy
 {
 	protected $state;
 	protected $item;
