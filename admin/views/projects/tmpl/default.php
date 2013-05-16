@@ -22,20 +22,10 @@ $canOrder	= $user->authorise('core.edit.state', 'com_amcportfolio.category');
 $saveOrder	= $listOrder=='ordering';
 if ($saveOrder)
 {
-	$saveOrderingUrl = 'index.php?option=com_banners&task=banners.saveOrderAjax&tmpl=component';
+	$saveOrderingUrl = 'index.php?option=com_amcportfolio&task=projects.saveOrderAjax&tmpl=component';
 	JHtml::_('sortablelist.sortable', 'articleList', 'adminForm', strtolower($listDirn), $saveOrderingUrl);
 }
 $sortFields = $this->getSortFields();
-
-
-//Add toolbar items
-//JToolBarHelper::title(   JText::_( 'AMC Portfolio : Projects Manager' ), 'generic.png' );
-//JToolBarHelper::deleteList();
-//JToolBarHelper::editListX();
-//JToolBarHelper::publishList();
-//JToolBarHelper::unpublishList();
-//JToolBarHelper::addNewX();
-
 ?>
 <script type="text/javascript">
 	Joomla.orderTable = function()

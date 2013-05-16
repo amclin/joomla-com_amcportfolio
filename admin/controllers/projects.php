@@ -80,4 +80,37 @@ class AMCPortfolioControllerProjects extends JControllerAdmin
 	
 		$this->setRedirect('index.php?option=com_amcportfolio&view=projects');
 	}
+	
+	/**
+	 * Method to save the submitted ordering values for records via AJAX.
+	 *
+	 * @return  void
+	 *
+	 * @since   4.2
+	 */
+	public function saveOrderAjax()
+	{
+		// Get the input
+		$pks = $this->input->post->get('cid', array(), 'array');
+		$order = $this->input->post->get('order', array(), 'array');
+	
+		// Sanitize the input
+		JArrayHelper::toInteger($pks);
+		JArrayHelper::toInteger($order);
+	
+		// Get the model
+		$model = $this->getModel();
+	
+		// Save the ordering
+		$return = $model->saveorder($pks, $order);
+	
+		if ($return)
+		{
+			echo "1";
+		}
+	
+		// Close the application
+		JFactory::getApplication()->close();
+	}
+	
 }

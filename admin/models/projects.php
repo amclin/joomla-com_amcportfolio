@@ -24,36 +24,25 @@ class AMCPortfolioModelProjects extends JModelList
 	 */
 // 	var $_data;
 
-	function __construct()
+	function __construct($config = array())
 	{
-// 		global $mainframe;
-
-// 		if (empty($config['filter_fields'])) {
-// 			$config['filter_fields'] = array(
-// 						'id', 'a.id',
-// 						'cid', 'a.cid', 'client_name',
-// 						'title', 'a.title',
-// 						'alias', 'a.alias',
-// 						'state', 'a.state',
-// 						'ordering', 'a.ordering',
-// 						'catid', 'a.catid', 'category_title',
-// 						'checked_out', 'a.checked_out',
-// 						'checked_out_time', 'a.checked_out_time',
-// 						'created', 'a.created',
-// 						'hits', 'a.hits',
-// 						'state'
-// 			);
-// 		}
+		if (empty($config['filter_fields'])) {
+			$config['filter_fields'] = array(
+						'id', 'a.id',
+						'title', 'a.title',
+						'alias', 'a.alias',
+						'state', 'a.state',
+						'ordering', 'a.ordering',
+						'catid', 'a.catid', 'category_title',
+						'checked_out', 'a.checked_out',
+						'checked_out_time', 'a.checked_out_time',
+						'created', 'a.created',
+						'hits', 'a.hits',
+						'state'
+			);
+		}
 		
-		parent::__construct();
-
-// 		$config = JFactory::getConfig();
-
-// 		Get the pagination request variables
-// 		$this->setState('limit', $mainframe->getUserStateFromRequest('com_amcportfolio.limit', 'limit', $config->getValue('config.list_limit'), 'int'));
-// 		$this->setState('limitstart', JRequest::getVar('limitstart', 0, '', 'int'));
-
-// 		$this->_data	= null;
+		parent::__construct($config);
 	}
 
 	/**
