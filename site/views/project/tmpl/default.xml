@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="Default Project Layout">
+		<message>
+			Display the details of a specific project in the default template.
+		</message>
+	</layout>
+	<fields name="request">
+		<fieldset name="request"
+			addfieldpath="/administrator/components/com_amcportfolio/elements">
+			<field name="id"
+				type="project"
+				description="Select a project to be displayed."
+				label="Select Project"
+				required="true"
+			/>
+		</fieldset>
+	</fields>
+	
+		<!-- Add fields to the request variables for the layout. -->
+	
+</metadata>

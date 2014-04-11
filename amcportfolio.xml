@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="1.7" method="upgrade">
+	<name>AMCPortfolio</name>
+	<creationDate>December 2011</creationDate>
+	<author>Anthony McLin</author>
+	<copyright>2011 All Rights Reserved</copyright>
+	<license>GPL v2</license>
+	<authorEmail>joomla@anthonymclin.com</authorEmail>
+	<authorUrl>http://www.anthonymclin.com</authorUrl>
+	<version>4.1.1</version>
+	<!-- 3.1 adds support for movies -->
+	<!-- 3.2 adds support for external links -->
+	<!-- 3.2.1 adds filtering in admin list view -->
+	<!-- 3.2.2 adds a plugin for sh404sef and fixes an SQL bug -->
+	<!-- 3.2.3 fixes a bug where you couldn't add images to projects on Windows servers -->
+	<!-- 3.2.4 fixes a bug where projects were reordering on save -->
+	<!-- 4.0 rebuilt for Joomla 1.7 -->
+	<!-- 4.1 Added "featured" project and ability to update from AMCPortfolio 4.0 -->
+	<!-- 4.1.1 Add ability to call all data of projects when viewing category -->
+	<description>This component displays custom built portfolios. It is a complete rewrite from scratch of previous versions of the AMC Portfolio compnent.</description>
+	<scriptfile>script.php</scriptfile>
+
+	<!-- Site Main File Copy Section -->
+	<files folder="site">
+		<folder>assets</folder>
+		<folder>helpers</folder>
+		<folder>models</folder>
+		<folder>views</folder>
+		<folder>views/category</folder>
+		<folder>views/category/tmpl</folder>
+		<folder>views/project</folder>
+		<folder>views/project/tmpl</folder>	
+
+		<filename>assets/imagesorter.css</filename>
+		
+		<filename>helpers/category.php</filename>
+		
+		<fielname>models/category.php</fielname>
+		<fielname>models/project.php</fielname>
+		<fielname>models/projects.php</fielname>
+		
+		<filename>views/category/tmpl/default_projects.php</filename>
+		<filename>views/category/tmpl/default.php</filename>
+		<filename>views/category/tmpl/default.xml</filename>
+		<filename>views/category/metadata.xml</filename>
+		<filename>views/category/view.html.php</filename>
+
+		<filename>views/project/tmpl/default.php</filename>
+		<filename>views/project/tmpl/default.xml</filename>
+		<filename>views/project/metadata.xml</filename>
+		<filename>views/project/view.html.php</filename>
+		
+		<filename>amcportfolio.php</filename>
+		<filename>controller.php</filename>
+		<filename>router.php</filename>
+	</files>
+
+
+
+	<administration>
+		<!-- Administration Menu Section -->
+		<menu>AMC Portfolio</menu>
+		<submenu>
+			<menu link="option=com_amcportfolio">Projects</menu>
+			<menu link="option=com_categories&amp;extension=com_amcportfolio">Categories</menu>
+		</submenu>
+
+		<files folder="admin">
+			<folder>assets</folder>
+			<folder>controllers</folder>
+			<folder>elements</folder>
+			<folder>models</folder>
+			<folder>models/forms</folder>
+			<folder>sql</folder>
+			<folder>tables</folder>
+			<folder>views</folder>
+			<folder>views/project</folder>
+			<folder>views/project/tmpl</folder>
+			<folder>views/projects</folder>
+			<folder>views/projects/tmpl</folder>
+		
+			<filename>assets/imagesorter.css</filename>
+			
+			<filename>controllers/project.php</filename>
+			<filename>controllers/projects.php</filename>
+			
+			<filename>elements/project.php</filename>
+
+			<filename>models/forms/project.xml</filename>
+			<filename>models/project.php</filename>
+			<filename>models/projects.php</filename>
+			
+			<filename>tables/project.php</filename>
+
+			<filename>views/project/tmpl/edit.php</filename>
+			<filename>views/project/view.html.php</filename>
+
+			<filename>views/projects/tmpl/default.php</filename>
+			<filename>views/projects/view.html.php</filename>
+			
+			<filename>amcportfolio.php</filename>
+			<filename>controller.php</filename>
+		</files>
+	</administration>
+	
+	<install>
+		<sql>
+			<file driver="mysql" charset="utf8">sql/install.sql</file>
+		</sql>
+	</install>
+	<uninstall>
+		<sql>
+			<file driver="mysql" charset="utf8">sql/uninstall.sql</file>
+		</sql>
+	</uninstall>
+	<update>
+		<schemas>
+			<schemapath type="mysql">sql/updates</schemapath>
+		</schemas>
+	</update>
+</extension>

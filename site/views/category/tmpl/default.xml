@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="Default Category Layout">
+		<message>
+			AMC Portfolio Standard Category Layout
+		</message>
+	</layout>
+	<fields name="request">
+		<fieldset name="request">
+			<field name="id" type="category"
+				label="Category"
+				description="PARAMCATSELECT"
+				extension="com_amcportfolio"
+				required="true"
+			/>
+		</fieldset>
+	</fields>
+</metadata>
